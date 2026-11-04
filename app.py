@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for, session, flash, abort, send_from_directory
 from werkzeug.security import check_password_hash
+from demo_backend import register_demo_routes
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'change-this-before-deploy-' + secrets.token_hex(16))
@@ -125,5 +126,6 @@ def terms():
 
 
 init_db()
+register_demo_routes(app, DB_PATH)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=False)
