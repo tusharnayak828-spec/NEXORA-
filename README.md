@@ -1,19 +1,31 @@
-# Nexora Technologies — website
+# Nexora Professional Demo Suite
 
-Flask website for Nexora Technologies with responsive marketing pages, project enquiry capture, SQLite lead storage and a password-protected admin dashboard.
+A responsive, browser-based portfolio suite containing three interactive B2B concept demos.
 
-## Routes
-- / — company website and enquiry form
-- /privacy and /terms — draft legal pages; review before publishing
-- /admin/login — administrator sign-in
-- /admin — private enquiry dashboard
+## Included
+1. **FactoryOS** — manufacturing work-order register, production status, progress, stage mix, add work order, CSV export.
+2. **ClientFlow CRM** — B2B lead list, pipeline value, stage updates, add lead, CSV export.
+3. **DocuMind AI** — document intake/review workflow, sample extraction simulation, approval queue, CSV export.
 
-## Render setup
-Build: `pip install -r requirements.txt`
-Start: `gunicorn app:app`
-Required environment variables: `SECRET_KEY`, `CONTACT_EMAIL` (replace placeholder with a verified inbox), `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `COOKIE_SECURE=true`.
+## Run locally
+Open `index.html` in a modern browser. No build step or API keys are required.
 
-## Important
-This repository is public. Never commit credentials, API keys, customer information or .env files. Demo concepts are illustrative, not client case studies. Nexora is a proposed business brand; verify legal status and contact details before publication.
+## Data and privacy
+- Sample data is fictional.
+- Changes are stored in the browser's localStorage on the current device/browser.
+- Do not upload confidential or real customer documents.
+- This is a front-end demo, not a production deployment.
 
-**Storage warning:** this deployment uses SQLite on a free Render service, whose local filesystem is ephemeral. Leads can be lost on restarts or redeploys. Before collecting real customer enquiries, connect durable managed PostgreSQL or a suitable persistent disk and update the application/database configuration. Legal pages are draft templates, not legal advice.
+## Honest capability notes
+- FactoryOS and ClientFlow CRM demonstrate local browser interactions only; no multi-user backend, authentication, role permissions, or live ERP/CRM integrations.
+- DocuMind AI simulates extraction. It does not run OCR, call an LLM, or send files to a server.
+- Production implementation should add authenticated APIs, PostgreSQL, audit logs, file storage, validation, access controls, backups, monitoring, and integrations.
+- Use fictional/demo data in public presentations. Do not describe these concepts as completed client deployments.
+
+## Suggested production architecture
+- Frontend: React / Next.js
+- API: Python Flask or FastAPI
+- Database: PostgreSQL
+- Authentication: secure sessions + role-based access
+- Document pipeline: private object storage + OCR + LLM extraction + deterministic validation + human approval
+- Hosting: Render or equivalent, with managed PostgreSQL and backups
