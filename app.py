@@ -1,7 +1,7 @@
 import os, secrets, sqlite3
 from datetime import datetime, timezone
 from functools import wraps
-from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
+from flask import Flask, render_template, request, redirect, url_for, session, flash, abort, send_from_directory
 from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
@@ -59,6 +59,14 @@ def submit_enquiry():
     with db() as con:
         con.execute('INSERT INTO leads(name,email,service,message,created_at) VALUES(?,?,?,?,?)', (name,email,service,message,datetime.now(timezone.utc).isoformat()))
     return redirect(url_for('home', sent='1') + '#contact')
+
+
+@app.get('/demos/<demo>/')
+def serve_demo(demo):
+    # Only serve the three reviewed portfolio demo folders.
+    if demo not in {'factoryos', 'clientflow', 'documind'}:
+        abort(404)
+    return send_from_directory(os.path.join(app.root_path, 'demos', demo), 'index.html')
 
 
 @app.get('/admin/login')
