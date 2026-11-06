@@ -9,7 +9,8 @@ def register_demo_routes(app, db_path):
     MAX_UPLOAD = 10 * 1024 * 1024
 
     def connect():
-        con = sqlite3.connect(db_path)
+        con = sqlite3.connect(db_path, timeout=20)
+        con.execute("PRAGMA busy_timeout=20000")
         con.row_factory = sqlite3.Row
         return con
 
@@ -160,7 +161,7 @@ def register_demo_routes(app, db_path):
         import json
         f = request.files.get("file")
         if not f or not f.filename: return fail("Choose a PDF or TXT document.")
-        filename = secure_filename(f.filename)[:180]
+        filename = secure_filename(f.filename)[:180] or "sample-document"
         ext = filename.rsplit(".",1)[-1].lower() if "." in filename else ""
         if ext not in {"pdf","txt"}: return fail("This version supports text-based PDF and TXT files. Image OCR and scanned PDFs need an AI/OCR provider.")
         raw = f.read(MAX_UPLOAD+1)
@@ -169,6 +170,8 @@ def register_demo_routes(app, db_path):
             if ext=="txt":
                 extracted = raw.decode("utf-8-sig")
             else:
+                if not raw.startswith(b"%PDF-"):
+                    return fail("The selected file does not appear to be a valid PDF.")
                 from pypdf import PdfReader
                 import io
                 reader=PdfReader(io.BytesIO(raw))
