@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'change-this-before-deploy-' + secrets.token_hex(16))
 app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE='Lax', SESSION_COOKIE_SECURE=os.environ.get('COOKIE_SECURE','false').lower()=='true', MAX_CONTENT_LENGTH=11 * 1024 * 1024)
 DB_PATH = os.environ.get('DB_PATH', os.path.join(os.path.dirname(__file__), 'nexora.db'))
-CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'hello@nexoratechnologies.in')
+CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'NSVERTEXTECHNOLOGIES@GMAIL.COM')
 
 
 def db():
