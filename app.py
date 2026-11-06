@@ -10,6 +10,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'change-this-before-deploy-' + sec
 app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE='Lax', SESSION_COOKIE_SECURE=os.environ.get('COOKIE_SECURE','false').lower()=='true', MAX_CONTENT_LENGTH=11 * 1024 * 1024)
 DB_PATH = os.environ.get('DB_PATH', os.path.join(os.path.dirname(__file__), 'nexora.db'))
 CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'NSVERTEXTECHNOLOGIES@GMAIL.COM')
+CONTACT_PHONE = os.environ.get('CONTACT_PHONE', '7600308992')
 
 
 def db():
@@ -45,7 +46,7 @@ def admin_required(fn):
 
 @app.get('/')
 def home():
-    return render_template('index.html', csrf_token=csrf_token(), contact_email=CONTACT_EMAIL, submitted=request.args.get('sent')=='1')
+    return render_template('index.html', csrf_token=csrf_token(), contact_email=CONTACT_EMAIL, contact_phone=CONTACT_PHONE, submitted=request.args.get('sent')=='1')
 
 
 @app.post('/enquiry')
